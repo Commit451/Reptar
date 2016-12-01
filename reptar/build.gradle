@@ -29,3 +29,5 @@ dependencies {
     compile 'io.reactivex.rxjava2:rxjava:2.0.1'
     testCompile 'junit:junit:4.12'
 }
+
+apply from: 'https://raw.githubusercontent.com/Commit451/gradle-android-javadocs/1.0.0/gradle-android-javadocs.gradle'
