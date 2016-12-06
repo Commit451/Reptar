@@ -6,10 +6,17 @@ import io.reactivex.disposables.Disposable;
 /**
  * {@link io.reactivex.SingleObserver} that does not care about {@link io.reactivex.SingleObserver#onSubscribe(Disposable)}
  */
-public abstract class SimpleSingleObserver<T> implements SingleObserver<T> {
+public class SimpleSingleObserver<T> implements SingleObserver<T> {
 
     @Override
     public void onSubscribe(Disposable d) {
-        //cool!
+    }
+
+    @Override
+    public void onError(Throwable e) {
+    }
+
+    @Override
+    public void onSuccess(T value) {
     }
 }

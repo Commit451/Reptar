@@ -1,8 +1,26 @@
 package com.commit451.reptar;
 
-/**
- * Created by Jawn on 12/5/2016.
- */
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
-public class SimpleObserver {
+/**
+ * {@link Observer} with methods implemented, allowing you to choose which to implement
+ */
+public class SimpleObserver<T> implements Observer<T> {
+
+    @Override
+    public void onSubscribe(Disposable d) {
+    }
+
+    @Override
+    public void onComplete() {
+    }
+
+    @Override
+    public void onNext(T value) {
+    }
+
+    @Override
+    public void onError(Throwable e) {
+    }
 }
