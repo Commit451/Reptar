@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.commit451.reptar.AdaptableSingleObserver;
+import com.commit451.reptar.FocusedSingleObserver;
 import com.commit451.reptar.retrofit.ResponseSingleObserver;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
@@ -49,6 +50,28 @@ public class MainActivity extends RxAppCompatActivity {
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new AdaptableSingleObserver<List<Contributor>>() {
+
+                            @Override
+                            public void onSuccess(List<Contributor> value) {
+                                Toast.makeText(MainActivity.this, "There are " + value.size() + " contributors to Retrofit!", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                onHandleError(e);
+                            }
+                        });
+            }
+        });
+
+        findViewById(R.id.button_single_focused).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gitHub.contributors("Commit451", "Reptar")
+                        .compose(MainActivity.this.<List<Contributor>>bindToLifecycle())
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new FocusedSingleObserver<List<Contributor>>() {
 
                             @Override
                             public void onSuccess(List<Contributor> value) {

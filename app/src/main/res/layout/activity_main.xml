@@ -16,7 +16,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Load single" />
+        android:text="Load single with adaptable" />
+
+    <Button
+        android:id="@+id/button_single_focused"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Load single with focused" />
 
     <Button
         android:id="@+id/button_response_single"
