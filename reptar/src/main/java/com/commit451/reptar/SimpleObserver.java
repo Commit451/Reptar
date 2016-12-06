@@ -1,12 +1,15 @@
 package com.commit451.reptar;
 
 import io.reactivex.Observer;
+import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
 
 /**
- * {@link Observer} with methods implemented, allowing you to choose which to implement
+ * {@link SingleObserver} which does not care about the {@link #onSubscribe(Disposable)}
+ * or {@link #onComplete()}
+ * @param <T>
  */
-public class SimpleObserver<T> implements Observer<T> {
+public abstract class SimpleObserver<T> implements Observer<T> {
 
     @Override
     public void onSubscribe(Disposable d) {
@@ -14,13 +17,5 @@ public class SimpleObserver<T> implements Observer<T> {
 
     @Override
     public void onComplete() {
-    }
-
-    @Override
-    public void onNext(T value) {
-    }
-
-    @Override
-    public void onError(Throwable e) {
     }
 }

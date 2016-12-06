@@ -3,6 +3,25 @@ Roaring RxJava
 
 [![Build Status](https://travis-ci.org/Commit451/Reptar.svg?branch=master)](https://travis-ci.org/Commit451/Reptar) [![](https://jitpack.io/v/Commit451/Alakazam.svg)](https://jitpack.io/#Commit451/Alakazam)
 
+# Gradle Dependency
+Add the jitpack url to the project:
+```groovy
+allprojects {
+    repositories {
+        ...
+        maven { url "https://jitpack.io" }
+    }
+}
+```
+then, in your app `build.gradle`
+```groovy
+dependencies {
+    compile 'com.github.Commit451.Reptar:reptar:latest.version.here@aar'
+    //for Retrofit support
+    compile 'com.github.Commit451.Reptar:reptar-retrofit:latest.version.here@aar'
+}
+```
+
 # Usage
 //TODO
 
