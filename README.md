@@ -1,7 +1,7 @@
 # Reptar
 Roaring RxJava
 
-[![Build Status](https://travis-ci.org/Commit451/Reptar.svg?branch=master)](https://travis-ci.org/Commit451/Reptar) [![](https://jitpack.io/v/Commit451/Alakazam.svg)](https://jitpack.io/#Commit451/Alakazam)
+[![Build Status](https://travis-ci.org/Commit451/Reptar.svg?branch=master)](https://travis-ci.org/Commit451/Reptar) [![](https://jitpack.io/v/Commit451/Reptar.svg)](https://jitpack.io/#Commit451/Reptar)
 
 # Gradle Dependency
 Add the jitpack url to the project:
@@ -38,16 +38,17 @@ gitHub.contributors("square", "okhttp")
     .subscribe(new ResponseSingleObserver<List<Contributor>>() {
         @Override
         protected void onResponseSuccess(List<Contributor> contributors) {
-            Toast.makeText(MainActivity.this, "Response code: " + getResponse().code(), Toast.LENGTH_SHORT)
-                    .show();
+            int responseCode = getResponse().code();
+            //do what you need to with the response
         }
 
         @Override
         public void onError(Throwable e) {
             if (e instanceof HttpException) {
                 //check the response code, do what you need to
+            } else {
+                //handle any other error
             }
-            onHandleError(e);
         }
     });
 ```

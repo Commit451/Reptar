@@ -11,7 +11,7 @@ import retrofit2.Response;
  * Subscriber that sends HTTP error codes into the {@link #onError(Throwable)}
  * block, but also allows access to the Retrofit response. This is useful
  * for cases where you do not need or want to still check {@link Response#isSuccessful()}
- * but also would like to be able to access the Retrofit response in your success block (via {@link #getResponse()}
+ * but also would like to be able to access the Retrofit response in your success block (via {@link #response()}
  */
 public abstract class ResponseSingleObserver<T> extends SimpleSingleObserver<Response<T>> {
 
@@ -30,7 +30,7 @@ public abstract class ResponseSingleObserver<T> extends SimpleSingleObserver<Res
         }
     }
 
-    public Response getResponse() {
+    public Response response() {
         return response;
     }
 }

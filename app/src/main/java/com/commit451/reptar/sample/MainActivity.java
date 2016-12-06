@@ -73,7 +73,7 @@ public class MainActivity extends RxAppCompatActivity {
                         .subscribe(new ResponseSingleObserver<List<Contributor>>() {
                             @Override
                             protected void onResponseSuccess(List<Contributor> contributors) {
-                                Toast.makeText(MainActivity.this, "Response code:" + getResponse().code(), Toast.LENGTH_SHORT)
+                                Toast.makeText(MainActivity.this, "Response code:" + response().code(), Toast.LENGTH_SHORT)
                                         .show();
                             }
 
