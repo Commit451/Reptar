@@ -34,5 +34,6 @@ dependencies {
     compile 'com.trello.rxlifecycle2:rxlifecycle-components:2.0.1'
     compile 'com.squareup.okhttp3:logging-interceptor:3.5.0'
     testCompile 'junit:junit:4.12'
+    compile project(':reptar')
     compile project(':reptar-retrofit')
 }
