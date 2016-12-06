@@ -24,8 +24,8 @@ dependencies {
 
 # Usage
 For instances where you only want to implement the callbacks you need:
--AdapterObserver
--AdapterSingleObserver
+* `AdapterObserver`
+* `AdapterSingleObserver`
 
 For `Observer`s where you only care about `onNext` and `onError`, use `SimpleObserver`
 
