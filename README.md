@@ -1,5 +1,5 @@
 # Reptar
-Roaring RxJava
+Roaring [RxJava](https://github.com/ReactiveX/RxJava). A collection of useful RxJava 2.X classes to allow for easier development.
 
 [![Build Status](https://travis-ci.org/Commit451/Reptar.svg?branch=master)](https://travis-ci.org/Commit451/Reptar) [![](https://jitpack.io/v/Commit451/Reptar.svg)](https://jitpack.io/#Commit451/Reptar)
 
