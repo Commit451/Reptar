@@ -2,7 +2,7 @@ package com.commit451.reptar.retrofit;
 
 import android.support.annotation.CallSuper;
 
-import com.commit451.reptar.SimpleSingleObserver;
+import com.commit451.reptar.FocusedSingleObserver;
 import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
 
 import retrofit2.Response;
@@ -13,7 +13,7 @@ import retrofit2.Response;
  * for cases where you do not need or want to still check {@link Response#isSuccessful()}
  * but also would like to be able to access the Retrofit response in your success block (via {@link #response()}
  */
-public abstract class ResponseSingleObserver<T> extends SimpleSingleObserver<Response<T>> {
+public abstract class ResponseSingleObserver<T> extends FocusedSingleObserver<Response<T>> {
 
     private Response response;
 

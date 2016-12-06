@@ -9,7 +9,7 @@ import io.reactivex.disposables.Disposable;
  * or {@link #onComplete()}
  * @param <T>
  */
-public abstract class SimpleObserver<T> implements Observer<T> {
+public abstract class FocusedObserver<T> implements Observer<T> {
 
     @Override
     public void onSubscribe(Disposable d) {

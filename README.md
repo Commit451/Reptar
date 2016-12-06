@@ -27,9 +27,9 @@ For instances where you only want to implement the callbacks you need:
 * `AdapterObserver`
 * `AdapterSingleObserver`
 
-For `Observer`s where you only care about `onNext` and `onError`, use `SimpleObserver`
+For `Observer`s where you only care about `onNext` and `onError`, use `FocusedObserver`
 
-For `SingleObserver`s where you only care about `onSuccess` and `onError`, use `SimpleSingleObserver`
+For `SingleObserver`s where you only care about `onSuccess` and `onError`, use `FocusedSingleObserver`
 
 #Usage Retrofit
 For Retrofit, many times, you need to get the raw response from Retrofit, but you also want all non 2XX error codes to fall through to the `onError()`. For this, `ResponseSingleObservable` is perfect:
