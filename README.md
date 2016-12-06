@@ -23,7 +23,34 @@ dependencies {
 ```
 
 # Usage
-//TODO
+For instances where you only want to implement the callbacks you need:
+-AdapterObserver
+-AdapterSingleObserver
+
+For `Observer`s where you only care about `onNext` and `onError`, use `SimpleObserver`
+
+For `SingleObserver`s where you only care about `onSuccess` and `onError`, use `SimpleSingleObserver`
+
+#Usage Retrofit
+For Retrofit, many times, you need to get the raw response from Retrofit, but you also want all non 2XX error codes to fall through to the `onError()`. For this, `ResponseSingleObservable` is perfect:
+```java
+gitHub.contributors("square", "okhttp")
+    .subscribe(new ResponseSingleObserver<List<Contributor>>() {
+        @Override
+        protected void onResponseSuccess(List<Contributor> contributors) {
+            Toast.makeText(MainActivity.this, "Response code: " + getResponse().code(), Toast.LENGTH_SHORT)
+                    .show();
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            if (e instanceof HttpException) {
+                //check the response code, do what you need to
+            }
+            onHandleError(e);
+        }
+    });
+```
 
 License
 --------
