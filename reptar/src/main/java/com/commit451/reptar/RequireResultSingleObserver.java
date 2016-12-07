@@ -11,7 +11,7 @@ public abstract class RequireResultSingleObserver<T> extends FocusedSingleObserv
     @Override
     public void onSuccess(Result<T> result) {
         if (!result.hasValue()) {
-            onError(new Exception("The result was empty"));
+            onError(new EmptyResultException());
         } else {
             onResultSuccess(result.value());
         }
