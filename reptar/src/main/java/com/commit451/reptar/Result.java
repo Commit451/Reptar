@@ -10,12 +10,23 @@ import android.support.annotation.Nullable;
  */
 public class Result<T> {
 
+    private static final Result NO_RESULT = new Result();
+
     /**
-     * If you have no result, you can pass this, which avoids object allocation
+     * If you have no result, gives you an empty result, which avoids object allocation
      */
-    public static final Result NO_RESULT = new Result(null);
+    public static <T> Result<T> empty() {
+        return NO_RESULT;
+    }
 
     private T value;
+
+    /**
+     * Construct an empty result, which can be emitted
+     * @see #NO_RESULT
+     */
+    public Result() {
+    }
 
     /**
      * Construct a result, which can be emitted

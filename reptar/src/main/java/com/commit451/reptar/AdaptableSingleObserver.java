@@ -5,6 +5,7 @@ import io.reactivex.disposables.Disposable;
 
 /**
  * {@link SingleObserver} that does not care about {@link io.reactivex.SingleObserver#onSubscribe(Disposable)}
+ * @param <T> the type
  */
 public class AdaptableSingleObserver<T> implements SingleObserver<T> {
 

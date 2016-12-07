@@ -1,17 +1,22 @@
 package com.commit451.reptar.sample;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.commit451.reptar.AdaptableSingleObserver;
 import com.commit451.reptar.FocusedSingleObserver;
+import com.commit451.reptar.Result;
 import com.commit451.reptar.retrofit.ResponseSingleObserver;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import java.util.List;
+import java.util.Random;
 
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
@@ -24,7 +29,10 @@ public class MainActivity extends RxAppCompatActivity {
 
     public static final String API_URL = "https://api.github.com";
 
+    ViewGroup root;
+
     GitHub gitHub;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +49,8 @@ public class MainActivity extends RxAppCompatActivity {
                 .build();
 
         gitHub = retrofit.create(GitHub.class);
+
+        root = (ViewGroup) findViewById(R.id.root);
 
         findViewById(R.id.button_single).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,6 +108,36 @@ public class MainActivity extends RxAppCompatActivity {
                             protected void onResponseSuccess(List<Contributor> contributors) {
                                 Toast.makeText(MainActivity.this, "Response code:" + response().code(), Toast.LENGTH_SHORT)
                                         .show();
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                onHandleError(e);
+                            }
+                        });
+            }
+        });
+        Random random = new Random();
+        findViewById(R.id.button_result).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Result<String> result;
+                if (random.nextInt() % 2 == 0) {
+                    result = new Result<>("hi");
+                } else {
+                    result = Result.empty();
+                }
+                Single.just(result)
+                        .subscribe(new FocusedSingleObserver<Result<String>>() {
+                            @Override
+                            public void onSuccess(Result<String> result) {
+                                if (result.hasValue()) {
+                                    Snackbar.make(root, "Has a result", Snackbar.LENGTH_SHORT)
+                                            .show();
+                                } else {
+                                    Snackbar.make(root, "No result", Snackbar.LENGTH_SHORT)
+                                            .show();
+                                }
                             }
 
                             @Override

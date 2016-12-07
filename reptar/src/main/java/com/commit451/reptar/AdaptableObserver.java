@@ -5,6 +5,7 @@ import io.reactivex.disposables.Disposable;
 
 /**
  * {@link Observer} with methods implemented, allowing you to choose which to implement
+ * @param <T> the type
  */
 public class AdaptableObserver<T> implements Observer<T> {
 

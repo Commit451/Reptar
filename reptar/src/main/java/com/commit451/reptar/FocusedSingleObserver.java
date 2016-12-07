@@ -5,7 +5,7 @@ import io.reactivex.disposables.Disposable;
 
 /**
  * {@link SingleObserver} which does not care about the {@link #onSubscribe(Disposable)}
- * @param <T>
+ * @param <T> the type
  */
 public abstract class FocusedSingleObserver<T> implements SingleObserver<T> {
 

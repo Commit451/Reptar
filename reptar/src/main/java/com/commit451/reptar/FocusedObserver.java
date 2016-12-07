@@ -7,7 +7,7 @@ import io.reactivex.disposables.Disposable;
 /**
  * {@link SingleObserver} which does not care about the {@link #onSubscribe(Disposable)}
  * or {@link #onComplete()}
- * @param <T>
+ * @param <T> the type
  */
 public abstract class FocusedObserver<T> implements Observer<T> {
 

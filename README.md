@@ -23,6 +23,8 @@ dependencies {
 ```
 
 # Usage
+Usage can be found in the sample project.
+###Observers
 For instances where you only want to implement the callbacks you need:
 * `AdapterObserver`
 * `AdapterSingleObserver`
@@ -31,6 +33,36 @@ For `Observer`s where you only care about `onNext` and `onError`, use `FocusedOb
 
 For `SingleObserver`s where you only care about `onSuccess` and `onError`, use `FocusedSingleObserver`
 
+###Avoiding Null
+RxJava 2.x does not allow propigating null. Read more [here](https://github.com/ReactiveX/RxJava/wiki/What's-different-in-2.0#nulls). `null` is still something we may not want to have fall through into the `onError` block though. For instance, if we want to check if a value exists, we could say that `null` means no, and a valid value means yes.
+
+As a replacement, we can use `Result`. For example:
+```java
+Result<String> result;
+if (random.nextInt() % 2 == 0) {
+    result = new Result<>("hi");
+} else {
+    result = Result.empty();
+}
+Single.just(result)
+        .subscribe(new FocusedSingleObserver<Result<String>>() {
+            @Override
+            public void onSuccess(Result<String> result) {
+                if (result.hasValue()) {
+                    Snackbar.make(root, "Has a result", Snackbar.LENGTH_SHORT)
+                            .show();
+                } else {
+                    Snackbar.make(root, "No result", Snackbar.LENGTH_SHORT)
+                            .show();
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                //Note that an empty result would not be an error
+            }
+        });
+```
 #Usage Retrofit
 For Retrofit, many times, you need to get the raw response from Retrofit, but you also want all non 2XX error codes to fall through to the `onError()`. For this, `ResponseSingleObservable` is perfect:
 ```java
@@ -38,7 +70,7 @@ gitHub.contributors("square", "okhttp")
     .subscribe(new ResponseSingleObserver<List<Contributor>>() {
         @Override
         protected void onResponseSuccess(List<Contributor> contributors) {
-            int responseCode = getResponse().code();
+            int responseCode = response().code();
             //do what you need to with the response
         }
 

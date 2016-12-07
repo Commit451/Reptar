@@ -12,11 +12,16 @@ import retrofit2.Response;
  * block, but also allows access to the Retrofit response. This is useful
  * for cases where you do not need or want to still check {@link Response#isSuccessful()}
  * but also would like to be able to access the Retrofit response in your success block (via {@link #response()}
+ * @param <T> the type
  */
 public abstract class ResponseSingleObserver<T> extends FocusedSingleObserver<Response<T>> {
 
-    private Response response;
+    private Response<T> response;
 
+    /**
+     * The response was a success. Fetch the raw response via {@link #response()}
+     * @param t the Retrofit response
+     */
     protected abstract void onResponseSuccess(T t);
 
     @CallSuper
@@ -30,7 +35,12 @@ public abstract class ResponseSingleObserver<T> extends FocusedSingleObserver<Re
         }
     }
 
-    public Response response() {
+    /**
+     * The raw retrofit response. Can be null within {@link #onError(Throwable)} so you will want
+     * to check for an {@link HttpException} or check for not {@code null} within {@link #onError(Throwable)}
+     * @return the raw response from Retrofit.
+     */
+    public Response<T> response() {
         return response;
     }
 }
