@@ -1,5 +1,5 @@
 # Reptar
-Roaring [RxJava](https://github.com/ReactiveX/RxJava). A collection of useful RxJava 2.X classes to allow for easier development.
+Roaring [RxJava](https://github.com/ReactiveX/RxJava). A collection of useful RxJava 2.X classes.
 
 [![Build Status](https://travis-ci.org/Commit451/Reptar.svg?branch=master)](https://travis-ci.org/Commit451/Reptar) [![](https://jitpack.io/v/Commit451/Reptar.svg)](https://jitpack.io/#Commit451/Reptar)
 
@@ -25,16 +25,16 @@ dependencies {
 # Usage
 Usage can be found in the sample project.
 ###Observers
-For instances where you only want to implement the callbacks you need:
+For instances where you only want to implement certain callbacks, use:
 * `AdapterObserver`
 * `AdapterSingleObserver`
 
-For `Observer`s where you only care about `onNext` and `onError`, use `FocusedObserver`
+For `Observer`s where you only want to implement `onNext` and `onError`, use `FocusedObserver`
 
-For `SingleObserver`s where you only care about `onSuccess` and `onError`, use `FocusedSingleObserver`
+For `SingleObserver`s where you want to implement `onSuccess` and `onError`, use `FocusedSingleObserver`
 
-###Avoiding Null
-RxJava 2.x does not allow propigating null. Read more [here](https://github.com/ReactiveX/RxJava/wiki/What's-different-in-2.0#nulls). `null` is still something we may not want to have fall through into the `onError` block though. For instance, if we want to check if a value exists, we could say that `null` means no, and a valid value means yes.
+### Avoiding Null
+RxJava 2.x does not allow propagating null. Read more [here](https://github.com/ReactiveX/RxJava/wiki/What's-different-in-2.0#nulls). `null` is still something we may not want to have fall through into the `onError` block though. For instance, if we want to check if a value exists, we could say that `null` means no, and a valid value means yes.
 
 As a replacement, we can use `Result`. For example:
 ```java
@@ -63,7 +63,9 @@ Single.just(result)
             }
         });
 ```
-#Usage Retrofit
+This is similar to an `Optional` in [Guava](https://github.com/google/guava/wiki/UsingAndAvoidingNullExplained#optional)
+
+# Retrofit Usage
 For Retrofit, many times, you need to get the raw response from Retrofit, but you also want all non 2XX error codes to fall through to the `onError()`. For this, `ResponseSingleObservable` is perfect:
 ```java
 gitHub.contributors("square", "okhttp")
