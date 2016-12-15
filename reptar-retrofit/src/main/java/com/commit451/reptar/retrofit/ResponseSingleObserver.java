@@ -27,6 +27,7 @@ public abstract class ResponseSingleObserver<T> extends FocusedSingleObserver<Re
     @CallSuper
     @Override
     public void onSuccess(Response<T> response) {
+        super.onSuccess(response);
         this.response = response;
         if (!response.isSuccessful()) {
             onError(new HttpException(response));

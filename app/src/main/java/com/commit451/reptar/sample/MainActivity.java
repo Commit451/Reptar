@@ -104,15 +104,16 @@ public class MainActivity extends RxAppCompatActivity {
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new ResponseSingleObserver<List<Contributor>>() {
+
                             @Override
-                            protected void onResponseSuccess(List<Contributor> contributors) {
+                            public void success(Response<List<Contributor>> listResponse) {
                                 Toast.makeText(MainActivity.this, "Response code:" + response().code(), Toast.LENGTH_SHORT)
                                         .show();
                             }
 
                             @Override
-                            public void onError(Throwable e) {
-                                onHandleError(e);
+                            public void failure(Throwable t) {
+                                onHandleError(t);
                             }
                         });
             }
