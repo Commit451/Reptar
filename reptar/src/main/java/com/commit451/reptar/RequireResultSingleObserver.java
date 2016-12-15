@@ -1,5 +1,6 @@
 package com.commit451.reptar;
 
+import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 
 /**
@@ -15,6 +16,7 @@ public abstract class RequireResultSingleObserver<T> extends FocusedSingleObserv
      */
     public abstract void onResultSuccess(@NonNull T t);
 
+    @CallSuper
     @Override
     public void onSuccess(Result<T> result) {
         if (!result.hasValue()) {

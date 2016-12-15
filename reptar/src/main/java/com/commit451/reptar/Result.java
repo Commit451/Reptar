@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 /**
  * Since {@code null} is not a valid result to emit, there may still be times when we want to pass
  * either a value, or nothing (such as if we are checking if the user is in a datastore). This class
- * allows you to pass a result, or null, if there is no result.
+ * allows you to pass a result, or null, if there is no result. Similar to Optional in Guava
  * @see <a href=https://github.com/ReactiveX/RxJava/wiki/What's-different-in-2.0#nulls>https://github.com/ReactiveX/RxJava/wiki/What's-different-in-2.0#nulls</a>
  */
 public class Result<T> {
