@@ -9,6 +9,6 @@ public class CancellationFailureChecker implements FailureChecker {
 
     @Override
     public boolean check(Throwable t) {
-        return !(t instanceof CancellationException);
+        return t instanceof CancellationException;
     }
 }

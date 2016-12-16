@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.commit451.reptar.AdaptableSingleObserver;
+import com.commit451.reptar.CancellationFailureChecker;
 import com.commit451.reptar.ComposableSingleObserver;
 import com.commit451.reptar.Result;
 import com.commit451.reptar.retrofit.ResponseSingleObserver;
@@ -147,6 +148,25 @@ public class MainActivity extends RxAppCompatActivity {
                                 onHandleError(t);
                             }
                         });
+            }
+        });
+
+        findViewById(R.id.button_cancellation).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Observables.cancellation()
+                        .subscribe(new ComposableSingleObserver<Boolean>() {
+                            @Override
+                            public void success(Boolean aBoolean) {
+                                //nope
+                            }
+
+                            @Override
+                            public void error(Throwable t) {
+                                //Will never get the error. Swallowed right up
+                                onHandleError(t);
+                            }
+                        }.add(new CancellationFailureChecker()));
             }
         });
     }

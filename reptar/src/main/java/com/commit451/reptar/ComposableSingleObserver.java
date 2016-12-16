@@ -9,7 +9,7 @@ import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
 
 /**
- * {@link SingleObserver} which does not care about the {@link #onSubscribe(Disposable)}
+ * {@link SingleObserver} which can be composed with {@link SuccessChecker}s and {@link FailureChecker}s.
  *
  * @param <T> the type
  */
@@ -56,7 +56,7 @@ public abstract class ComposableSingleObserver<T> implements SingleObserver<T> {
     public void onSubscribe(Disposable d) {
     }
 
-    public ComposableSingleObserver add(SuccessChecker successChecker) {
+    public ComposableSingleObserver<T> add(SuccessChecker successChecker) {
         if (successCheckers == null) {
             successCheckers = new ArrayList<>();
         }
@@ -64,7 +64,7 @@ public abstract class ComposableSingleObserver<T> implements SingleObserver<T> {
         return this;
     }
 
-    public ComposableSingleObserver add(FailureChecker failureChecker) {
+    public ComposableSingleObserver<T> add(FailureChecker failureChecker) {
         if (failureCheckers == null) {
             failureCheckers = new ArrayList<>();
         }

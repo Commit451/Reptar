@@ -29,9 +29,36 @@ For instances where you only want to implement certain callbacks, use:
 * `AdapterObserver`
 * `AdapterSingleObserver`
 
-For `Observer`s where you only want to implement `onNext` and `onError`, use `FocusedObserver`
+### Composable Observers
+Often times, you want to subscribe to `Observable`s and have certain rules surrounding the observers. For example, you may want to use a `SingleObserver`, but ignore any `CancellationException`s since your `Activity` or `Fragment` is probably destroyed when this exception is thrown. You could potentially override the `Observer` and do the check in the subclass. But, this can result in tons of subclasses that all perform simple boolean checks.
 
-For `SingleObserver`s where you want to implement `onSuccess` and `onError`, use `FocusedSingleObserver`
+`ComposableSingleObserver` and `ComposableObserver` make it simple to add checks on the success and failure of observers. For example:
+```java
+someObservable
+    .subscribe(new ComposableSingleObserver<Boolean>() {
+        @Override
+        public void success(Boolean aBoolean) {
+            //do some success thing
+        }
+
+        @Override
+        public void error(Throwable t) {
+            //error block will never get CancellationExceptions
+            onHandleError(t);
+        }
+    }.add(new CancellationFailureChecker()));
+```
+CancellationFailureChecker:
+```java
+public class CancellationFailureChecker implements FailureChecker {
+
+    @Override
+    public boolean check(Throwable t) {
+        return t instanceof CancellationException;
+    }
+}
+```
+See `SuccessChecker` and `FailureChecker` for more
 
 ### Avoiding Null
 RxJava 2.x does not allow propagating null. Read more [here](https://github.com/ReactiveX/RxJava/wiki/What's-different-in-2.0#nulls). `null` is still something we may not want to have fall through into the `onError` block though. For instance, if we want to check if a value exists, we could say that `null` means no, and a valid value means yes.
@@ -45,9 +72,9 @@ if (random.nextInt() % 2 == 0) {
     result = Result.empty();
 }
 Single.just(result)
-        .subscribe(new FocusedSingleObserver<Result<String>>() {
+        .subscribe(new ComposableSingleObserver<Result<String>>() {
             @Override
-            public void onSuccess(Result<String> result) {
+            public void success(Result<String> result) {
                 if (result.hasValue()) {
                     Snackbar.make(root, "Has a result", Snackbar.LENGTH_SHORT)
                             .show();
@@ -58,7 +85,7 @@ Single.just(result)
             }
 
             @Override
-            public void onError(Throwable e) {
+            public void error(Throwable e) {
                 //Note that an empty result would not be an error
             }
         });
@@ -71,13 +98,13 @@ For Retrofit, many times, you need to get the raw response from Retrofit, but yo
 gitHub.contributors("square", "okhttp")
     .subscribe(new ResponseSingleObserver<List<Contributor>>() {
         @Override
-        protected void onResponseSuccess(List<Contributor> contributors) {
+        protected void responseSuccess(List<Contributor> contributors) {
             int responseCode = response().code();
             //do what you need to with the response
         }
 
         @Override
-        public void onError(Throwable e) {
+        public void error(Throwable e) {
             if (e instanceof HttpException) {
                 //check the response code, do what you need to
             } else {
