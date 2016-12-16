@@ -2,7 +2,7 @@ package com.commit451.reptar.retrofit;
 
 import android.support.annotation.CallSuper;
 
-import com.commit451.reptar.FocusedSingleObserver;
+import com.commit451.reptar.ComposableSingleObserver;
 import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
 
 import retrofit2.Response;
@@ -14,7 +14,7 @@ import retrofit2.Response;
  * but also would like to be able to access the Retrofit response in your success block (via {@link #response()}
  * @param <T> the type
  */
-public abstract class ResponseSingleObserver<T> extends FocusedSingleObserver<Response<T>> {
+public abstract class ResponseSingleObserver<T> extends ComposableSingleObserver<Response<T>> {
 
     private Response<T> response;
 
@@ -22,17 +22,16 @@ public abstract class ResponseSingleObserver<T> extends FocusedSingleObserver<Re
      * The response was a success. Fetch the raw response via {@link #response()}
      * @param t the Retrofit response
      */
-    protected abstract void onResponseSuccess(T t);
+    public abstract void responseSuccess(T t);
 
     @CallSuper
     @Override
-    public void onSuccess(Response<T> response) {
-        super.onSuccess(response);
+    public void success(Response<T> response) {
         this.response = response;
         if (!response.isSuccessful()) {
-            onError(new HttpException(response));
+            error(new HttpException(response));
         } else {
-            onResponseSuccess(response.body());
+            responseSuccess(response.body());
         }
     }
 

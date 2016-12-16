@@ -1,0 +1,75 @@
+package com.commit451.reptar;
+
+import android.support.annotation.CallSuper;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import io.reactivex.Observer;
+import io.reactivex.SingleObserver;
+import io.reactivex.disposables.Disposable;
+
+/**
+ * {@link SingleObserver} which does not care about the {@link #onSubscribe(Disposable)}
+ * or {@link #onComplete()}
+ * @param <T> the type
+ */
+public abstract class ComposableObserver<T> implements Observer<T> {
+
+    private List<SuccessChecker> successCheckers;
+    private List<FailureChecker> failureCheckers;
+
+    public abstract void next(T t);
+
+    public abstract void error(Throwable t);
+
+    @CallSuper
+    @Override
+    public void onNext(T value) {
+        if (successCheckers != null) {
+            for (SuccessChecker successChecker : successCheckers) {
+                Throwable throwable = successChecker.check(value);
+                if (throwable != null) {
+                    error(throwable);
+                    return;
+                }
+            }
+        }
+        next(value);
+    }
+
+    @CallSuper
+    @Override
+    public void onError(Throwable e) {
+        if (failureCheckers != null) {
+            for (FailureChecker failureChecker : failureCheckers) {
+                boolean result = failureChecker.check(e);
+                if (result) {
+                    return;
+                }
+            }
+        }
+        //we made it through all the checks, so now we can alert
+        error(e);
+    }
+
+    @Override
+    public void onSubscribe(Disposable d) {
+    }
+
+    public ComposableObserver addSuccessChecker(SuccessChecker successChecker) {
+        if (successCheckers == null) {
+            successCheckers = new ArrayList<>();
+        }
+        successCheckers.add(successChecker);
+        return this;
+    }
+
+    public ComposableObserver addFailureChecker(FailureChecker failureChecker) {
+        if (failureCheckers == null) {
+            failureCheckers = new ArrayList<>();
+        }
+        failureCheckers.add(failureChecker);
+        return this;
+    }
+}

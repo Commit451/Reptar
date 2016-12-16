@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.commit451.reptar.AdaptableSingleObserver;
-import com.commit451.reptar.FocusedSingleObserver;
+import com.commit451.reptar.ComposableSingleObserver;
 import com.commit451.reptar.Result;
 import com.commit451.reptar.retrofit.ResponseSingleObserver;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -81,15 +81,15 @@ public class MainActivity extends RxAppCompatActivity {
                         .compose(MainActivity.this.<List<Contributor>>bindToLifecycle())
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new FocusedSingleObserver<List<Contributor>>() {
+                        .subscribe(new ComposableSingleObserver<List<Contributor>>() {
 
                             @Override
-                            public void onSuccess(List<Contributor> value) {
-                                Toast.makeText(MainActivity.this, "There are " + value.size() + " contributors to Retrofit!", Toast.LENGTH_SHORT).show();
+                            public void success(List<Contributor> contributors) {
+                                Toast.makeText(MainActivity.this, "There are " + contributors.size() + " contributors to Retrofit!", Toast.LENGTH_SHORT).show();
                             }
 
                             @Override
-                            public void onError(Throwable e) {
+                            public void error(Throwable e) {
                                 onHandleError(e);
                             }
                         });
@@ -106,13 +106,13 @@ public class MainActivity extends RxAppCompatActivity {
                         .subscribe(new ResponseSingleObserver<List<Contributor>>() {
 
                             @Override
-                            public void success(Response<List<Contributor>> listResponse) {
+                            public void responseSuccess(List<Contributor> contributors) {
                                 Toast.makeText(MainActivity.this, "Response code:" + response().code(), Toast.LENGTH_SHORT)
                                         .show();
                             }
 
                             @Override
-                            public void failure(Throwable t) {
+                            public void error(Throwable t) {
                                 onHandleError(t);
                             }
                         });
@@ -129,10 +129,11 @@ public class MainActivity extends RxAppCompatActivity {
                     result = Result.empty();
                 }
                 Single.just(result)
-                        .subscribe(new FocusedSingleObserver<Result<String>>() {
+                        .subscribe(new ComposableSingleObserver<Result<String>>() {
+
                             @Override
-                            public void onSuccess(Result<String> result) {
-                                if (result.hasValue()) {
+                            public void success(Result<String> stringResult) {
+                                if (result.isPresent()) {
                                     Snackbar.make(root, "Has a result", Snackbar.LENGTH_SHORT)
                                             .show();
                                 } else {
@@ -142,8 +143,8 @@ public class MainActivity extends RxAppCompatActivity {
                             }
 
                             @Override
-                            public void onError(Throwable e) {
-                                onHandleError(e);
+                            public void error(Throwable t) {
+                                onHandleError(t);
                             }
                         });
             }

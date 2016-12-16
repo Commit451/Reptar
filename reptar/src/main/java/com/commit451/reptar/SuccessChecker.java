@@ -7,6 +7,11 @@ import android.support.annotation.Nullable;
  */
 public interface SuccessChecker<T> {
 
+    /**
+     * Perform the check to see if the value should be a success or not.
+     * @param t the value
+     * @return an exception that will be thrown to the observer error block, or null if the value is accepted
+     */
     @Nullable
     Throwable check(T t);
 }
