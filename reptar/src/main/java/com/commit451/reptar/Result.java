@@ -4,9 +4,10 @@ import android.support.annotation.Nullable;
 
 /**
  * Since {@code null} is not a valid result to emit, there may still be times when we want to pass
- * either a value, or nothing (such as if we are checking if the user is in a datastore). This class
+ * either a get, or nothing (such as if we are checking if the user is in a datastore). This class
  * allows you to pass a result, or null, if there is no result. Similar to Optional in Guava
  * @see <a href=https://github.com/ReactiveX/RxJava/wiki/What's-different-in-2.0#nulls>https://github.com/ReactiveX/RxJava/wiki/What's-different-in-2.0#nulls</a>
+ * @see <a href=https://github.com/google/guava/wiki/UsingAndAvoidingNullExplained>https://github.com/google/guava/wiki/UsingAndAvoidingNullExplained</a>
  */
 public class Result<T> {
 
@@ -37,18 +38,18 @@ public class Result<T> {
     }
 
     /**
-     * Check to see if a value exists
-     * @return true if a value exists, false if not
+     * Check to see if a result exists
+     * @return true if a result exists, false if not
      */
-    public boolean hasValue() {
+    public boolean isPresent() {
         return value != null;
     }
 
     /**
-     * Get the value within the result. Typically, you should check {@link #hasValue()} first
+     * Get the get within the result. Typically, you should check {@link #isPresent()} first
      * @return the value, or null if there is none
      */
-    public T value() {
+    public T get() {
         return value;
     }
 }
