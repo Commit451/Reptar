@@ -4,9 +4,10 @@ import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 
 /**
- * Created by Jawn on 12/15/2016.
+ * Subscriber for {@link Result} where we require the result to exist, otherwise we call through to
+ * {@link #onError(Throwable)} with an {@link EmptyResultException}
+ * @param <T> the type
  */
-
 public abstract class RequireResultSingleObserver<T> extends ComposableSingleObserver<Result<T>>{
 
     /**

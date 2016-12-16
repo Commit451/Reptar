@@ -64,7 +64,7 @@ public class MainActivity extends RxAppCompatActivity {
 
                             @Override
                             public void onSuccess(List<Contributor> value) {
-                                Toast.makeText(MainActivity.this, "There are " + value.size() + " contributors to Retrofit!", Toast.LENGTH_SHORT).show();
+                                Snackbar.make(root, "There are " + value.size() + " contributors to Retrofit!", Snackbar.LENGTH_SHORT).show();
                             }
 
                             @Override
@@ -86,7 +86,7 @@ public class MainActivity extends RxAppCompatActivity {
 
                             @Override
                             public void success(List<Contributor> contributors) {
-                                Toast.makeText(MainActivity.this, "There are " + contributors.size() + " contributors to Retrofit!", Toast.LENGTH_SHORT).show();
+                                Snackbar.make(root, "There are " + contributors.size() + " contributors to Reptar!", Snackbar.LENGTH_SHORT).show();
                             }
 
                             @Override
@@ -108,7 +108,7 @@ public class MainActivity extends RxAppCompatActivity {
 
                             @Override
                             public void responseSuccess(List<Contributor> contributors) {
-                                Toast.makeText(MainActivity.this, "Response code:" + response().code(), Toast.LENGTH_SHORT)
+                                Snackbar.make(root, "Response code:" + response().code(), Snackbar.LENGTH_SHORT)
                                         .show();
                             }
 
