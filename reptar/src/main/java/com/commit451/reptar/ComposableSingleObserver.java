@@ -15,7 +15,7 @@ import io.reactivex.disposables.Disposable;
  */
 public abstract class ComposableSingleObserver<T> implements SingleObserver<T> {
 
-    private List<SuccessChecker> successCheckers;
+    private List<SuccessChecker<T>> successCheckers;
     private List<FailureChecker> failureCheckers;
 
     public abstract void success(T t);
@@ -26,9 +26,10 @@ public abstract class ComposableSingleObserver<T> implements SingleObserver<T> {
     @Override
     public void onSuccess(T value) {
         if (successCheckers != null) {
-            for (SuccessChecker successChecker : successCheckers) {
+            for (SuccessChecker<T> successChecker : successCheckers) {
                 Throwable throwable = successChecker.check(value);
                 if (throwable != null) {
+                    //found an exception, so throw it to error()
                     error(throwable);
                     return;
                 }
@@ -56,7 +57,7 @@ public abstract class ComposableSingleObserver<T> implements SingleObserver<T> {
     public void onSubscribe(Disposable d) {
     }
 
-    public ComposableSingleObserver<T> add(SuccessChecker successChecker) {
+    public ComposableSingleObserver<T> add(SuccessChecker<T> successChecker) {
         if (successCheckers == null) {
             successCheckers = new ArrayList<>();
         }
