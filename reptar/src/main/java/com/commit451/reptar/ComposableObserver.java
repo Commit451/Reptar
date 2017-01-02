@@ -57,6 +57,10 @@ public abstract class ComposableObserver<T> implements Observer<T> {
     public void onSubscribe(Disposable d) {
     }
 
+    @Override
+    public void onComplete() {
+    }
+
     public ComposableObserver<T> add(SuccessChecker successChecker) {
         if (successCheckers == null) {
             successCheckers = new ArrayList<>();
