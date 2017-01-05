@@ -18,7 +18,7 @@ public abstract class RequireResultSingleObserver<T> extends ComposableSingleObs
 
     @CallSuper
     @Override
-    public void success(Result<T> result) {
+    public void success(@NonNull Result<T> result) {
         if (!result.isPresent()) {
             onError(new EmptyResultException());
         } else {

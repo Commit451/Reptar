@@ -1,6 +1,7 @@
 package com.commit451.reptar.sample;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,12 +86,12 @@ public class MainActivity extends RxAppCompatActivity {
                         .subscribe(new ComposableSingleObserver<List<Contributor>>() {
 
                             @Override
-                            public void success(List<Contributor> contributors) {
+                            public void success(@NonNull List<Contributor> contributors) {
                                 Snackbar.make(root, "There are " + contributors.size() + " contributors to Reptar!", Snackbar.LENGTH_SHORT).show();
                             }
 
                             @Override
-                            public void error(Throwable e) {
+                            public void error(@NonNull Throwable e) {
                                 onHandleError(e);
                             }
                         });
@@ -107,13 +108,13 @@ public class MainActivity extends RxAppCompatActivity {
                         .subscribe(new ResponseSingleObserver<List<Contributor>>() {
 
                             @Override
-                            public void responseSuccess(List<Contributor> contributors) {
+                            public void responseSuccess(@NonNull List<Contributor> contributors) {
                                 Snackbar.make(root, "Response code:" + response().code(), Snackbar.LENGTH_SHORT)
                                         .show();
                             }
 
                             @Override
-                            public void error(Throwable t) {
+                            public void error(@NonNull Throwable t) {
                                 onHandleError(t);
                             }
                         });
@@ -133,7 +134,7 @@ public class MainActivity extends RxAppCompatActivity {
                         .subscribe(new ComposableSingleObserver<Result<String>>() {
 
                             @Override
-                            public void success(Result<String> stringResult) {
+                            public void success(@NonNull Result<String> stringResult) {
                                 if (result.isPresent()) {
                                     Snackbar.make(root, "Has a result", Snackbar.LENGTH_SHORT)
                                             .show();
@@ -144,7 +145,7 @@ public class MainActivity extends RxAppCompatActivity {
                             }
 
                             @Override
-                            public void error(Throwable t) {
+                            public void error(@NonNull Throwable t) {
                                 onHandleError(t);
                             }
                         });
@@ -157,12 +158,12 @@ public class MainActivity extends RxAppCompatActivity {
                 Observables.cancellation()
                         .subscribe(new ComposableSingleObserver<Boolean>() {
                             @Override
-                            public void success(Boolean aBoolean) {
+                            public void success(@NonNull Boolean aBoolean) {
                                 //nope
                             }
 
                             @Override
-                            public void error(Throwable t) {
+                            public void error(@NonNull Throwable t) {
                                 //Will never get the error. Swallowed right up
                                 onHandleError(t);
                             }

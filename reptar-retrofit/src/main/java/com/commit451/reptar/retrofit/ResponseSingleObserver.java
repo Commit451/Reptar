@@ -1,6 +1,7 @@
 package com.commit451.reptar.retrofit;
 
 import android.support.annotation.CallSuper;
+import android.support.annotation.NonNull;
 
 import com.commit451.reptar.ComposableSingleObserver;
 import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
@@ -22,11 +23,11 @@ public abstract class ResponseSingleObserver<T> extends ComposableSingleObserver
      * The response was a success. Fetch the raw response via {@link #response()}
      * @param t the Retrofit response
      */
-    public abstract void responseSuccess(T t);
+    public abstract void responseSuccess(@NonNull T t);
 
     @CallSuper
     @Override
-    public void success(Response<T> response) {
+    public void success(@NonNull Response<T> response) {
         this.response = response;
         if (!response.isSuccessful()) {
             error(new HttpException(response));

@@ -1,5 +1,6 @@
 package com.commit451.reptar;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 /**
@@ -9,7 +10,7 @@ public class RequireResultSuccessChecker implements SuccessChecker<Result<?>> {
 
     @Nullable
     @Override
-    public Throwable check(Result<?> result) {
+    public Throwable check(@NonNull Result<?> result) {
         if (!result.isPresent()) {
             return new EmptyResultException();
         }

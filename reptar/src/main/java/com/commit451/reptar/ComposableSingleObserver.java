@@ -1,6 +1,7 @@
 package com.commit451.reptar;
 
 import android.support.annotation.CallSuper;
+import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +19,9 @@ public abstract class ComposableSingleObserver<T> implements SingleObserver<T> {
     private List<SuccessChecker<T>> successCheckers;
     private List<FailureChecker> failureCheckers;
 
-    public abstract void success(T t);
+    public abstract void success(@NonNull T t);
 
-    public abstract void error(Throwable t);
+    public abstract void error(@NonNull Throwable t);
 
     @CallSuper
     @Override

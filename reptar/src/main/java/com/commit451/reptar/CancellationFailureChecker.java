@@ -1,5 +1,7 @@
 package com.commit451.reptar;
 
+import android.support.annotation.NonNull;
+
 import java.util.concurrent.CancellationException;
 
 /**
@@ -8,7 +10,7 @@ import java.util.concurrent.CancellationException;
 public class CancellationFailureChecker implements FailureChecker {
 
     @Override
-    public boolean check(Throwable t) {
+    public boolean check(@NonNull Throwable t) {
         return t instanceof CancellationException;
     }
 }

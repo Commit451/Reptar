@@ -1,5 +1,6 @@
 package com.commit451.reptar;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 /**
@@ -13,5 +14,5 @@ public interface SuccessChecker<T> {
      * @return an exception that will be thrown to the observer error block, or null if the value is accepted
      */
     @Nullable
-    Throwable check(T t);
+    Throwable check(@NonNull T t);
 }
