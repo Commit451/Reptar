@@ -1,5 +1,6 @@
 package com.commit451.reptar.sample;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -29,8 +30,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends RxAppCompatActivity {
 
-    public static final String API_URL = "https://api.github.com";
-
     ViewGroup root;
 
     GitHub gitHub;
@@ -44,7 +43,7 @@ public class MainActivity extends RxAppCompatActivity {
                 .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                 .build();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(API_URL)
+                .baseUrl(GitHub.API_URL)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -120,6 +119,7 @@ public class MainActivity extends RxAppCompatActivity {
                         });
             }
         });
+
         Random random = new Random();
         findViewById(R.id.button_result).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,6 +168,13 @@ public class MainActivity extends RxAppCompatActivity {
                                 onHandleError(t);
                             }
                         }.add(new CancellationFailureChecker()));
+            }
+        });
+
+        findViewById(R.id.button_kotlin).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, MainKotlinActivity.class));
             }
         });
     }

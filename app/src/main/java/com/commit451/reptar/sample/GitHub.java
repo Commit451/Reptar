@@ -10,6 +10,8 @@ import retrofit2.http.Path;
 
 public interface GitHub {
 
+    String API_URL = "https://api.github.com";
+
     @GET("/repos/{owner}/{repo}/contributors")
     Single<List<Contributor>> contributors(@Path("owner") String owner,
                                            @Path("repo") String repo);

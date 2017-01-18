@@ -1,1 +1,1 @@
-include ':app', ':reptar', ':reptar-retrofit'
+include ':app', ':reptar', ':reptar-retrofit', ':reptar-kotlin'
