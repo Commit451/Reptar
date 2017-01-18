@@ -1,5 +1,5 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-
+apply plugin: 'com.github.ben-manes.versions'
 buildscript {
     ext.kotlin_version = '1.0.6'
     repositories {
@@ -16,8 +16,6 @@ buildscript {
         // in the individual module build.gradle files
     }
 }
-
-apply plugin: 'com.github.ben-manes.versions'
 
 allprojects {
     repositories {

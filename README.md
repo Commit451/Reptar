@@ -19,6 +19,8 @@ dependencies {
     compile 'com.github.Commit451.Reptar:reptar:latest.version.here@aar'
     //for Retrofit support
     compile 'com.github.Commit451.Reptar:reptar-retrofit:latest.version.here@aar'
+    //for Kotlin support
+    compile 'com.github.Commit451.Reptar:reptar-kotlin:latest.version.here@aar'
 }
 ```
 
@@ -112,6 +114,23 @@ gitHub.contributors("square", "okhttp")
             }
         }
     });
+```
+
+# Kotlin Usage
+Kotlin extensions allow for easy composition of Single and Observable for Android:
+```kotlin
+gitHub.contributors("jetbrains", "kotlin")
+    .fromIoToMainThread()
+    .subscribe(object : CustomSingleObserver<List<Contributor>>() {
+        override fun success(t: List<Contributor>) {
+            Snackbar.make(root, "It worked!", Snackbar.LENGTH_SHORT)
+                    .show()
+        }
+
+        override fun error(t: Throwable) {
+            onHandleError(t)
+        }
+    })
 ```
 
 License
