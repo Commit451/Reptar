@@ -60,7 +60,19 @@ public class CancellationFailureChecker implements FailureChecker {
     }
 }
 ```
-See `SuccessChecker` and `FailureChecker` for more
+
+You could also just create an abstract Observer that you use throughout the app that contains these rules so that you do not have to repeat them:
+```java
+public abstract class CustomSingleObserver<T> extends ComposableSingleObserver<T> {
+
+    public CustomSingleObserver() {
+        add(new CancellationFailureChecker());
+        //add other success and failure checks as desired
+    }
+
+}
+```
+See `SuccessChecker` and `FailureChecker` for more.
 
 ### Avoiding Null
 RxJava 2.x does not allow propagating null. Read more [here](https://github.com/ReactiveX/RxJava/wiki/What's-different-in-2.0#nulls). `null` is still something we may not want to have fall through into the `onError` block though. For instance, if we want to check if a value exists, we could say that `null` means no, and a valid value means yes.
@@ -136,7 +148,7 @@ gitHub.contributors("jetbrains", "kotlin")
 License
 --------
 
-    Copyright 2016 Commit 451
+    Copyright 2017 Commit 451
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
