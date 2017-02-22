@@ -5,11 +5,11 @@ import android.support.design.widget.Snackbar
 import android.view.ViewGroup
 import android.widget.Toast
 import com.commit451.reptar.kotlin.fromIoToMainThread
-import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 class MainKotlinActivity : RxAppCompatActivity() {

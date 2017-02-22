@@ -13,7 +13,6 @@ import com.commit451.reptar.CancellationFailureChecker;
 import com.commit451.reptar.ComposableSingleObserver;
 import com.commit451.reptar.Result;
 import com.commit451.reptar.retrofit.ResponseSingleObserver;
-import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import java.util.List;
@@ -26,6 +25,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends RxAppCompatActivity {
