@@ -7,9 +7,9 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.3'
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.13.0'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.14.0'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
-        classpath 'me.tatarka:gradle-retrolambda:3.4.0'
+        classpath 'me.tatarka:gradle-retrolambda:3.5.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -32,5 +32,5 @@ ext {
     compileSdkVersion = 25
     targetSdkVersion = compileSdkVersion
     buildToolsVersion = '25.0.2'
-    supportLibVersion = '25.1.0'
+    supportLibVersion = '25.2.0'
 }
