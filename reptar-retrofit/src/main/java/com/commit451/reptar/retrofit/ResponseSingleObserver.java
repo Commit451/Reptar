@@ -2,6 +2,7 @@ package com.commit451.reptar.retrofit;
 
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.commit451.reptar.ComposableSingleObserver;
 
@@ -14,18 +15,16 @@ import retrofit2.Response;
  * for cases where you do not need or want to still check {@link Response#isSuccessful()}
  * but also would like to be able to access the Retrofit response in your success block (via {@link #response()}
  * @param <T> the type
- * @deprecated use {@link retrofit2.adapter.rxjava2.Result} instead
  */
-@Deprecated
 public abstract class ResponseSingleObserver<T> extends ComposableSingleObserver<Response<T>> {
 
     private Response<T> response;
 
     /**
      * The response was a success. Fetch the raw response via {@link #response()}
-     * @param t the Retrofit response
+     * @param t the Retrofit response body, which can be null depending on your API
      */
-    public abstract void responseSuccess(@NonNull T t);
+    public abstract void responseSuccess(@Nullable T t);
 
     @CallSuper
     @Override

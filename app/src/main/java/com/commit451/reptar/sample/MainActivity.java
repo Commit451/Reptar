@@ -3,6 +3,7 @@ package com.commit451.reptar.sample;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.view.ViewGroup;
@@ -107,7 +108,7 @@ public class MainActivity extends RxAppCompatActivity {
                         .subscribe(new ResponseSingleObserver<List<Contributor>>() {
 
                             @Override
-                            public void responseSuccess(@NonNull List<Contributor> contributors) {
+                            public void responseSuccess(@Nullable List<Contributor> contributors) {
                                 Snackbar.make(root, "Response code:" + response().code(), Snackbar.LENGTH_SHORT)
                                         .show();
                             }
