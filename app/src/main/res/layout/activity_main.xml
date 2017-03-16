@@ -40,6 +40,13 @@
         android:text="Load result"/>
 
     <Button
+        android:id="@+id/button_flatmap_response"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Test flatmap response"/>
+
+    <Button
         android:id="@+id/button_cancellation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

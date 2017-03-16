@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -13,6 +14,7 @@ import com.commit451.reptar.AdaptableSingleObserver;
 import com.commit451.reptar.CancellationFailureChecker;
 import com.commit451.reptar.ComposableSingleObserver;
 import com.commit451.reptar.Result;
+import com.commit451.reptar.retrofit.ResponseFunction;
 import com.commit451.reptar.retrofit.ResponseSingleObserver;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
@@ -20,9 +22,12 @@ import java.util.List;
 import java.util.Random;
 
 import io.reactivex.Single;
+import io.reactivex.SingleSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
+import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -58,6 +63,13 @@ public class MainActivity extends RxAppCompatActivity {
             @Override
             public void onClick(View view) {
                 gitHub.contributors("square", "retrofit")
+                        .doOnSuccess(new Consumer<List<Contributor>>() {
+                            @Override
+                            public void accept(@io.reactivex.annotations.NonNull List<Contributor> contributors) throws Exception {
+                                Log.d("TEST", "doOnSuccess");
+                                Toast.makeText(MainActivity.this, "Toasty!", Toast.LENGTH_SHORT).show();
+                            }
+                        })
                         .compose(MainActivity.this.<List<Contributor>>bindToLifecycle())
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -65,6 +77,7 @@ public class MainActivity extends RxAppCompatActivity {
 
                             @Override
                             public void onSuccess(List<Contributor> value) {
+                                Log.d("TEST", "onSuccess");
                                 Snackbar.make(root, "There are " + value.size() + " contributors to Retrofit!", Snackbar.LENGTH_SHORT).show();
                             }
 
@@ -169,6 +182,35 @@ public class MainActivity extends RxAppCompatActivity {
                                 onHandleError(t);
                             }
                         }.add(new CancellationFailureChecker()));
+            }
+        });
+
+        findViewById(R.id.button_flatmap_response).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gitHub.orgs()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .flatMap(new ResponseFunction<ResponseBody, SingleSource<String>>() {
+                            @Override
+                            protected SingleSource<String> applyResponse(@Nullable ResponseBody responseBody) throws Exception {
+                                return Single.just("It will never actually get here");
+                            }
+                        })
+                        .subscribe(new ComposableSingleObserver<String>() {
+                            @Override
+                            public void success(@NonNull String s) {
+                                Snackbar.make(root, "Success?! This is bad", Snackbar.LENGTH_SHORT)
+                                        .show();
+                            }
+
+                            @Override
+                            public void error(@NonNull Throwable t) {
+                                t.printStackTrace();
+                                Snackbar.make(root, "We got a failure from the flat map. Good!", Snackbar.LENGTH_SHORT)
+                                        .show();
+                            }
+                        });
             }
         });
 

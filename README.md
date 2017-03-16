@@ -128,6 +128,7 @@ gitHub.contributors("square", "okhttp")
         }
     });
 ```
+Similarly, you can use `ResponseFunction` in replacement of `Function` to easily `flatMap` a result without needing to worry about checking `.isSuccessful()` on the result.
 
 # Kotlin Usage
 Kotlin extensions allow for easy composition of Single and Observable for Android:
