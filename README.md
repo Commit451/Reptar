@@ -26,7 +26,8 @@ dependencies {
 
 # Usage
 Usage can be found in the sample project.
-###Observers
+
+### Observers
 For instances where you only want to implement certain callbacks, use:
 * `AdapterObserver`
 * `AdapterSingleObserver`
