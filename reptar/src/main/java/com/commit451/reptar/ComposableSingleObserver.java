@@ -18,6 +18,7 @@ public abstract class ComposableSingleObserver<T> implements SingleObserver<T> {
 
     private List<SuccessChecker<T>> successCheckers;
     private List<FailureChecker> failureCheckers;
+    private Disposable disposable;
 
     public abstract void success(@NonNull T t);
 
@@ -56,6 +57,7 @@ public abstract class ComposableSingleObserver<T> implements SingleObserver<T> {
 
     @Override
     public void onSubscribe(Disposable d) {
+        this.disposable = d;
     }
 
     public ComposableSingleObserver<T> add(SuccessChecker<T> successChecker) {
@@ -72,5 +74,9 @@ public abstract class ComposableSingleObserver<T> implements SingleObserver<T> {
         }
         failureCheckers.add(failureChecker);
         return this;
+    }
+
+    public Disposable disposable() {
+        return disposable;
     }
 }

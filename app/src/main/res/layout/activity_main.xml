@@ -54,6 +54,13 @@
         android:text="Test cancellation"/>
 
     <Button
+        android:id="@+id/button_completion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Test completion"/>
+
+    <Button
         android:id="@+id/button_kotlin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

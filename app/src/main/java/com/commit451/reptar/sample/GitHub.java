@@ -2,6 +2,7 @@ package com.commit451.reptar.sample;
 
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.Single;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
@@ -20,6 +21,9 @@ public interface GitHub {
     @GET("/repos/{owner}/{repo}/contributors")
     Single<Response<List<Contributor>>> contributorsResponse(@Path("owner") String owner,
                                                              @Path("repo") String repo);
+
+    @GET("/emojis")
+    Completable emojis();
 
     /**
      * Requires auth. We use this to test failure

@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.commit451.reptar.AdaptableSingleObserver;
 import com.commit451.reptar.CancellationFailureChecker;
+import com.commit451.reptar.ComposableCompletableObserver;
 import com.commit451.reptar.ComposableSingleObserver;
 import com.commit451.reptar.Result;
 import com.commit451.reptar.retrofit.ResponseFunction;
@@ -209,6 +210,27 @@ public class MainActivity extends RxAppCompatActivity {
                                 t.printStackTrace();
                                 Snackbar.make(root, "We got a failure from the flat map. Good!", Snackbar.LENGTH_SHORT)
                                         .show();
+                            }
+                        });
+            }
+        });
+
+        findViewById(R.id.button_completion).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gitHub.emojis()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ComposableCompletableObserver() {
+                            @Override
+                            public void complete() {
+                                Snackbar.make(root, "Completable success", Snackbar.LENGTH_SHORT)
+                                        .show();
+                            }
+
+                            @Override
+                            public void error(@NonNull Throwable t) {
+                                onHandleError(t);
                             }
                         });
             }

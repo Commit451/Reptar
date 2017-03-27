@@ -7,18 +7,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observer;
-import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
 
 /**
- * {@link SingleObserver} which does not care about the {@link #onSubscribe(Disposable)}
- * or {@link #onComplete()}
+ * {@link Observer} which can be composed with {@link SuccessChecker}s and {@link FailureChecker}s.
+ *
  * @param <T> the type
  */
 public abstract class ComposableObserver<T> implements Observer<T> {
 
     private List<SuccessChecker> successCheckers;
     private List<FailureChecker> failureCheckers;
+    private Disposable disposable;
 
     public abstract void next(@NonNull T t);
 
@@ -56,6 +56,7 @@ public abstract class ComposableObserver<T> implements Observer<T> {
 
     @Override
     public void onSubscribe(Disposable d) {
+        this.disposable = d;
     }
 
     @Override
@@ -76,5 +77,9 @@ public abstract class ComposableObserver<T> implements Observer<T> {
         }
         failureCheckers.add(failureChecker);
         return this;
+    }
+
+    public Disposable disposable() {
+        return disposable;
     }
 }
