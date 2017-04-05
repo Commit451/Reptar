@@ -26,7 +26,7 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'io.reactivex.rxjava2:rxjava:2.0.7'
+    compile 'io.reactivex.rxjava2:rxjava:2.0.8'
     compile "com.android.support:support-annotations:$supportLibVersion"
 
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
