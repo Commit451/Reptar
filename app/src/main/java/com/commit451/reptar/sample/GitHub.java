@@ -27,8 +27,9 @@ public interface GitHub {
     @GET("/emojis")
     Completable emojis();
 
-    @GET("/emojis")
-    Single<Optional<List<Contributor>>> contributorsOrNull();
+    @GET("/repos/{owner}/{repo}/contributors")
+    Single<Optional<List<Contributor>>> contributorsOrNull(@Path("owner") String owner,
+                                                           @Path("repo") String repo);
 
     /**
      * Requires auth. We use this to test failure

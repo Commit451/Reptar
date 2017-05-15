@@ -15,6 +15,7 @@ import com.commit451.reptar.CancellationFailureChecker;
 import com.commit451.reptar.ComposableCompletableObserver;
 import com.commit451.reptar.ComposableSingleObserver;
 import com.commit451.reptar.Optional;
+import com.commit451.reptar.retrofit.OptionalConverterFactor;
 import com.commit451.reptar.retrofit.ResponseFunction;
 import com.commit451.reptar.retrofit.ResponseSingleObserver;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
@@ -52,6 +53,7 @@ public class MainActivity extends RxAppCompatActivity {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(GitHub.API_URL)
                 .client(client)
+                .addConverterFactory(OptionalConverterFactor.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
@@ -151,7 +153,7 @@ public class MainActivity extends RxAppCompatActivity {
                             @Override
                             public void success(@NonNull Optional<String> stringResult) {
                                 if (optional.isPresent()) {
-                                    Snackbar.make(root, "Has a optional", Snackbar.LENGTH_SHORT)
+                                    Snackbar.make(root, "Has an optional", Snackbar.LENGTH_SHORT)
                                             .show();
                                 } else {
                                     Snackbar.make(root, "No optional", Snackbar.LENGTH_SHORT)
@@ -170,7 +172,7 @@ public class MainActivity extends RxAppCompatActivity {
         findViewById(R.id.button_optional_from_api).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gitHub.contributorsOrNull()
+                gitHub.contributorsOrNull("Commit451", "Reptar")
                         .compose(bindToLifecycle())
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -178,7 +180,7 @@ public class MainActivity extends RxAppCompatActivity {
                             @Override
                             public void success(@NonNull Optional<List<Contributor>> contributors) {
                                 if (contributors.isPresent()) {
-                                    Snackbar.make(root, "Has a optional", Snackbar.LENGTH_SHORT)
+                                    Snackbar.make(root, "Has an optional", Snackbar.LENGTH_SHORT)
                                             .show();
                                 } else {
                                     Snackbar.make(root, "No optional", Snackbar.LENGTH_SHORT)
