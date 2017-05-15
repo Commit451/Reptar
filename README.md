@@ -78,18 +78,18 @@ See `SuccessChecker` and `FailureChecker` for more.
 ### Avoiding Null
 RxJava 2.x does not allow propagating null. Read more [here](https://github.com/ReactiveX/RxJava/wiki/What's-different-in-2.0#nulls). `null` is still something we may not want to have fall through into the `onError` block though. For instance, if we want to check if a value exists, we could say that `null` means no, and a valid value means yes.
 
-As a replacement, we can use `Result`. For example:
+As a replacement, we can use `Optional`. For example:
 ```java
-Result<String> optional;
+Optional<String> optional;
 if (random.nextInt() % 2 == 0) {
-    optional = new Result<>("hi");
+    optional = new Optional<>("hi");
 } else {
-    optional = Result.empty();
+    optional = Optional.empty();
 }
 Single.just(optional)
-        .subscribe(new ComposableSingleObserver<Result<String>>() {
+        .subscribe(new ComposableSingleObserver<Optional<String>>() {
             @Override
-            public void success(Result<String> optional) {
+            public void success(Optional<String> optional) {
                 if (optional.hasValue()) {
                     Snackbar.make(root, "Has a optional", Snackbar.LENGTH_SHORT)
                             .show();
