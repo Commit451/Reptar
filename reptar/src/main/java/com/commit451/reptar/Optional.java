@@ -9,31 +9,31 @@ import android.support.annotation.Nullable;
  * @see <a href=https://github.com/ReactiveX/RxJava/wiki/What's-different-in-2.0#nulls>https://github.com/ReactiveX/RxJava/wiki/What's-different-in-2.0#nulls</a>
  * @see <a href=https://github.com/google/guava/wiki/UsingAndAvoidingNullExplained>https://github.com/google/guava/wiki/UsingAndAvoidingNullExplained</a>
  */
-public class Result<T> {
+public class Optional<T> {
 
-    private static final Result NO_RESULT = new Result();
+    private static final Optional EMPTY = new Optional();
 
     /**
      * If you have no result, gives you an empty result, which avoids object allocation
      */
-    public static <T> Result<T> empty() {
-        return NO_RESULT;
+    public static <T> Optional<T> empty() {
+        return EMPTY;
     }
 
     private T value;
 
     /**
      * Construct an empty result, which can be emitted
-     * @see #NO_RESULT
+     * @see #EMPTY
      */
-    public Result() {
+    public Optional() {
     }
 
     /**
      * Construct a result, which can be emitted
      * @param value the value, or null to give a null result
      */
-    public Result(@Nullable T value) {
+    public Optional(@Nullable T value) {
         this.value = value;
     }
 

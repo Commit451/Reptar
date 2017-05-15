@@ -6,12 +6,12 @@ import android.support.annotation.Nullable;
 /**
  * Check to see if a result exists. If it does not, throw an {@link EmptyResultException}
  */
-public class RequireResultSuccessChecker implements SuccessChecker<Result<?>> {
+public class RequireOptionalSuccessChecker implements SuccessChecker<Optional<?>> {
 
     @Nullable
     @Override
-    public Throwable check(@NonNull Result<?> result) {
-        if (!result.isPresent()) {
+    public Throwable check(@NonNull Optional<?> optional) {
+        if (!optional.isPresent()) {
             return new EmptyResultException();
         }
         return null;

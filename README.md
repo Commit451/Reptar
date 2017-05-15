@@ -33,7 +33,7 @@ For instances where you only want to implement certain callbacks, use:
 * `AdapterSingleObserver`
 
 ### Composable Observers
-Often times, you want to subscribe to `Observable`s and have certain rules surrounding the observers. For example, you may want to use a `SingleObserver`, but ignore any `CancellationException`s since your `Activity` or `Fragment` is probably destroyed when this exception is thrown. You could potentially override the `Observer` and do the check in the subclass. But, this can result in tons of subclasses that all perform simple boolean checks.
+Often times, you want to subscribe to `Observable`s and have certain rules surrounding the observers. For example, you may want to use a `SingleObserver`, but ignore any `CancellationException`s since your `Activity` or `Fragment` is probably destroyed when this exception is thrown. You could potentially override the `Observer` and do the check in the subclass. But, this can optional in tons of subclasses that all perform simple boolean checks.
 
 `ComposableSingleObserver` and `ComposableObserver` make it simple to add checks on the success and failure of observers. For example:
 ```java
@@ -80,28 +80,28 @@ RxJava 2.x does not allow propagating null. Read more [here](https://github.com/
 
 As a replacement, we can use `Result`. For example:
 ```java
-Result<String> result;
+Result<String> optional;
 if (random.nextInt() % 2 == 0) {
-    result = new Result<>("hi");
+    optional = new Result<>("hi");
 } else {
-    result = Result.empty();
+    optional = Result.empty();
 }
-Single.just(result)
+Single.just(optional)
         .subscribe(new ComposableSingleObserver<Result<String>>() {
             @Override
-            public void success(Result<String> result) {
-                if (result.hasValue()) {
-                    Snackbar.make(root, "Has a result", Snackbar.LENGTH_SHORT)
+            public void success(Result<String> optional) {
+                if (optional.hasValue()) {
+                    Snackbar.make(root, "Has a optional", Snackbar.LENGTH_SHORT)
                             .show();
                 } else {
-                    Snackbar.make(root, "No result", Snackbar.LENGTH_SHORT)
+                    Snackbar.make(root, "No optional", Snackbar.LENGTH_SHORT)
                             .show();
                 }
             }
 
             @Override
             public void error(Throwable e) {
-                //Note that an empty result would not be an error
+                //Note that an empty optional would not be an error
             }
         });
 ```
@@ -128,7 +128,7 @@ gitHub.contributors("square", "okhttp")
         }
     });
 ```
-Similarly, you can use `ResponseFunction` in replacement of `Function` to easily `flatMap` a result without needing to worry about checking `.isSuccessful()` on the result.
+Similarly, you can use `ResponseFunction` in replacement of `Function` to easily `flatMap` a optional without needing to worry about checking `.isSuccessful()` on the optional.
 
 # Kotlin Usage
 Kotlin extensions allow for easy composition of Single and Observable for Android:

@@ -14,7 +14,7 @@ import com.commit451.reptar.AdaptableSingleObserver;
 import com.commit451.reptar.CancellationFailureChecker;
 import com.commit451.reptar.ComposableCompletableObserver;
 import com.commit451.reptar.ComposableSingleObserver;
-import com.commit451.reptar.Result;
+import com.commit451.reptar.Optional;
 import com.commit451.reptar.retrofit.ResponseFunction;
 import com.commit451.reptar.retrofit.ResponseSingleObserver;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
@@ -139,22 +139,49 @@ public class MainActivity extends RxAppCompatActivity {
         findViewById(R.id.button_result).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Result<String> result;
+                Optional<String> optional;
                 if (random.nextInt() % 2 == 0) {
-                    result = new Result<>("hi");
+                    optional = new Optional<>("hi");
                 } else {
-                    result = Result.empty();
+                    optional = Optional.empty();
                 }
-                Single.just(result)
-                        .subscribe(new ComposableSingleObserver<Result<String>>() {
+                Single.just(optional)
+                        .subscribe(new ComposableSingleObserver<Optional<String>>() {
 
                             @Override
-                            public void success(@NonNull Result<String> stringResult) {
-                                if (result.isPresent()) {
-                                    Snackbar.make(root, "Has a result", Snackbar.LENGTH_SHORT)
+                            public void success(@NonNull Optional<String> stringResult) {
+                                if (optional.isPresent()) {
+                                    Snackbar.make(root, "Has a optional", Snackbar.LENGTH_SHORT)
                                             .show();
                                 } else {
-                                    Snackbar.make(root, "No result", Snackbar.LENGTH_SHORT)
+                                    Snackbar.make(root, "No optional", Snackbar.LENGTH_SHORT)
+                                            .show();
+                                }
+                            }
+
+                            @Override
+                            public void error(@NonNull Throwable t) {
+                                onHandleError(t);
+                            }
+                        });
+            }
+        });
+
+        findViewById(R.id.button_optional_from_api).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gitHub.contributorsOrNull()
+                        .compose(bindToLifecycle())
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new CustomSingleObserver<Optional<List<Contributor>>>() {
+                            @Override
+                            public void success(@NonNull Optional<List<Contributor>> contributors) {
+                                if (contributors.isPresent()) {
+                                    Snackbar.make(root, "Has a optional", Snackbar.LENGTH_SHORT)
+                                            .show();
+                                } else {
+                                    Snackbar.make(root, "No optional", Snackbar.LENGTH_SHORT)
                                             .show();
                                 }
                             }

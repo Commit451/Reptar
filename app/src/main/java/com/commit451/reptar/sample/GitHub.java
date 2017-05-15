@@ -1,5 +1,7 @@
 package com.commit451.reptar.sample;
 
+import com.commit451.reptar.Optional;
+
 import java.util.List;
 
 import io.reactivex.Completable;
@@ -24,6 +26,9 @@ public interface GitHub {
 
     @GET("/emojis")
     Completable emojis();
+
+    @GET("/emojis")
+    Single<Optional<List<Contributor>>> contributorsOrNull();
 
     /**
      * Requires auth. We use this to test failure

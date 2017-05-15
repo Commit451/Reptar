@@ -24,17 +24,14 @@ android {
     }
 }
 ext {
-    retrofitVersion = '2.2.0'
+    retrofitVersion = '2.3.0'
 }
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
     compile "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
     compile project(':reptar')
-
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
+    provided 'com.google.code.findbugs:jsr305:3.0.2'
 
     testCompile 'junit:junit:4.12'
 }

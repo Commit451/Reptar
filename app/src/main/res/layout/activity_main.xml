@@ -37,7 +37,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Load result"/>
+        android:text="Load optional"/>
+
+    <Button
+        android:id="@+id/button_optional_from_api"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Load optional from API"/>
 
     <Button
         android:id="@+id/button_flatmap_response"
