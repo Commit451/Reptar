@@ -16,11 +16,11 @@ allprojects {
 then, in your app `build.gradle`
 ```groovy
 dependencies {
-    compile 'com.github.Commit451.Reptar:reptar:latest.version.here@aar'
+    compile "com.github.Commit451.Reptar:reptar:latest.version.here"
     //for Retrofit support
-    compile 'com.github.Commit451.Reptar:reptar-retrofit:latest.version.here@aar'
+    compile "com.github.Commit451.Reptar:reptar-retrofit:latest.version.here"
     //for Kotlin support
-    compile 'com.github.Commit451.Reptar:reptar-kotlin:latest.version.here@aar'
+    compile "com.github.Commit451.Reptar:reptar-kotlin:latest.version.here"
 }
 ```
 
