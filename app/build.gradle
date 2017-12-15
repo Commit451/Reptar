@@ -24,26 +24,30 @@ android {
     lintOptions {
         abortOnError false
     }
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-    }
 }
 
 ext {
-    rxlifecycleVersion = '2.1.0'
+    autodisposeVersion = '0.5.1'
 }
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-    compile "com.android.support:appcompat-v7:$supportLibVersion"
-    compile "com.android.support:design:$supportLibVersion"
-    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    compile "com.trello.rxlifecycle2:rxlifecycle-components:$rxlifecycleVersion"
-    compile "com.trello.rxlifecycle2:rxlifecycle-kotlin:$rxlifecycleVersion"
-    compile 'com.squareup.okhttp3:logging-interceptor:3.8.0'
-    compile 'com.google.code.findbugs:jsr305:3.0.2'
-    compile project(':reptar')
-    compile project(':reptar-retrofit')
-    compile project(':reptar-kotlin')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    implementation "com.android.support:appcompat-v7:$supportLibVersion"
+    implementation "com.android.support:design:$supportLibVersion"
+
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+
+    implementation "com.uber.autodispose:autodispose-kotlin:$autodisposeVersion"
+    implementation "com.uber.autodispose:autodispose-android-kotlin:$autodisposeVersion"
+    implementation "com.uber.autodispose:autodispose-android-archcomponents-kotlin:$autodisposeVersion"
+
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
+
+    implementation 'com.google.code.findbugs:jsr305:3.0.2'
+
+    implementation project(':reptar')
+    implementation project(':reptar-retrofit')
+    implementation project(':reptar-kotlin')
 }

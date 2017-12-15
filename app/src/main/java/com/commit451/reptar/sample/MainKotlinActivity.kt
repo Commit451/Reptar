@@ -4,15 +4,13 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.view.ViewGroup
 import android.widget.Toast
-import com.commit451.reptar.kotlin.fromIoToMainThread
-import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-class MainKotlinActivity : RxAppCompatActivity() {
+class MainKotlinActivity : BaseActivity() {
 
     lateinit var root: ViewGroup
     lateinit var gitHub: GitHub
@@ -21,7 +19,7 @@ class MainKotlinActivity : RxAppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_kotlin)
 
-        root = findViewById(R.id.root) as ViewGroup
+        root = findViewById(R.id.root)
 
         val client = OkHttpClient.Builder()
                 .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
@@ -36,8 +34,7 @@ class MainKotlinActivity : RxAppCompatActivity() {
         gitHub = retrofit.create(GitHub::class.java)
 
         gitHub.contributors("jetbrains", "kotlin")
-                .compose(bindToLifecycle())
-                .fromIoToMainThread()
+                .with(this)
                 .subscribe(object : CustomSingleObserver<List<Contributor>>() {
                     override fun success(t: List<Contributor>) {
                         Snackbar.make(root, "It worked!", Snackbar.LENGTH_SHORT)
